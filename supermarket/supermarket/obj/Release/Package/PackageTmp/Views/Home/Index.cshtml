@@ -1,0 +1,56 @@
+﻿<link href="~/stylefolder/style/home1.css" rel="stylesheet" />
+<link href="~/stylefolder/style/asdf.css" rel="stylesheet" />
+<br />  
+<div style="margin-left:-15px;margin-right:-15px;margin-top:9px;">
+    <div class="street" style="">
+        <div class="market">
+            <span class="moon"></span>
+            <span class="market__name">24 hours</span>
+            <span class="market__fold market__fold--1"></span>
+            <span class="market__fold market__fold--2"></span>
+            <span class="market__fold market__fold--3"></span>
+            <span class="market__fold market__fold--4"></span>
+            <div class="cat">
+                <span class="cat__tail"></span>
+                <div class="cat__head"></div>
+                <span class="cat__leg cat__leg--1"></span>
+                <span class="cat__leg cat__leg--2"></span>
+                <span class="cat__leg cat__leg--3"></span>
+                <span class="cat__leg cat__leg--4"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GRID EXAMPLE -->
+<h3>Top 10 Items In Our Store</h3>
+@foreach (var item in Model)
+{
+
+    <div class="container1">
+        <ul id="item-list">
+
+            <li>
+                <a href="@Url.Action("Details","Store",new { id = item.ItemId })">
+                </a>
+                <div class="product" data-title="@item.Title"
+                     data-img="@item.ItemArtUrl"
+                     data-url="@item.ItemArtUrl"
+                     style="background: url(@item.ItemArtUrl);background-size: cover;">
+                </div>
+                <span>@item.Title</span>
+<br>
+                @String.Format("{0:F}", item.Price)$
+                <p class="button1">
+                    @Html.ActionLink("Add to cart", "AddToCart",
+        "ShoppingCart", new { id = item.ItemId }, "")
+                </p>
+            </li>
+
+
+        </ul>
+
+    </div>
+
+}
+

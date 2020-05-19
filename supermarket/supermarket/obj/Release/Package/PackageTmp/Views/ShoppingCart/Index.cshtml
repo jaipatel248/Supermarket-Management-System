@@ -1,0 +1,95 @@
+﻿@model supermarket.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<script src="/Scripts/jquery-1.4.4.min.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/RemoveFromCart", {"id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+
+    
+</script>
+<h3>
+    <em>Review of </em> your cart:
+</h3>
+    @Html.ActionLink("Check Out", "AddressAndPayment", "Checkout", new { tot = Model.CartTotal },null)<br />
+ @Html.ActionLink("Buy More", "Index", "Store")
+<br /><br />
+<table style="text-align:center;" class="table-hover">
+    <tr>
+        <th>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Item Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </th>
+        <th>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Price (each)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </th>
+        <th>
+            &nbsp;&nbsp;&nbsp; Quantity&nbsp;&nbsp;&nbsp;
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CartItems)
+    {
+        <tr id="row-@item.RecordId">
+            <td>
+                @Html.ActionLink(item.Item.Title,
+"Details", "Store", new { id = item.ItemId }, null) 
+            </td>
+            <td>
+                @item.Item.Price   </td>
+            <td id="item-count-@item.RecordId">
+
+                @Html.ActionLink("-", "RemoveFromCart",
+                "ShoppingCart", new { id = item.ItemId }, null)
+
+                @item.Count
+                    
+                @Html.ActionLink("+", "AddToCart",
+                "ShoppingCart", new { id = item.ItemId }, null) 
+            </td>
+            
+            
+            <td>
+                @Html.ActionLink("Remove from cart", "RemoveFromCart",
+        "ShoppingCart", new { id = item.ItemId }, null)
+
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td></td>
+        <td></td>
+
+        <td id="cart-total">
+            @Model.CartTotal
+        </td>
+    </tr>
+</table>
+<br /><br>
+
+@Html.ActionLink("clear cart", "Clearcart2", "ShoppingCart", null, new { @class = "btn btn-primary" })

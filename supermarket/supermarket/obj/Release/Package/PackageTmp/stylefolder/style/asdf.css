@@ -1,0 +1,28 @@
+﻿.product {
+				width:200px;
+				height:200px;
+				margin-bottom: 8px;
+				padding-top: 8px;
+			}
+			.container1 .product span {
+				text-transform: uppercase;
+				color: #ccc;
+				display:inline-block;
+				transform: translateY(-16px);
+			}
+			.add-to-cart {
+				margin-right: 8px;
+			}
+			.container1 {
+				display: inline-block;
+				margin: 24px;
+				text-align: center;
+				//background-color: #e5e5e5;
+			}
+
+			.container1 span.add-to-cart, .container1 span.add-to-wish {
+				color: #666;
+				padding-bottom: 12px;
+				display: inline-block;
+				cursor: pointer;
+			}

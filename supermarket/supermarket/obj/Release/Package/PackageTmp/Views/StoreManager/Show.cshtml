@@ -1,0 +1,81 @@
+﻿@model supermarket.Models.Order
+
+@{
+    ViewBag.Title = "Show";
+    var newdate1 = ViewBag.newdate1;
+    var orders = ViewBag.orders;
+    var total = 0;
+}
+
+<h2>Show</h2>
+
+<br />
+<text>@newdate1</text>
+
+@if (orders != null)
+{
+    foreach (var order in orders)
+    {
+        if (order.OrderDate.ToShortDateString() ==newdate1)
+        {
+            total += order.Total;
+
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        <label>Firstname</label>
+                    </dt>
+
+                    <dd>
+                        <label>@order.FirstName</label>
+                    </dd>
+
+                    <dt>
+                        <label>Lastname</label>
+                    </dt>
+
+                    <dd>
+                        <label>@order.LastName</label>
+                    </dd>
+
+                    <dt>
+                        <label>Phone</label>
+                    </dt>
+
+                    <dd>
+                        <label>@order.Phone</label>
+                    </dd>
+
+                    <dt>
+                        <label>Email</label>
+                    </dt>
+
+                    <dd>
+                        <label>@order.Email</label>
+                    </dd>
+
+                    <dt>
+                        <label>Total</label>
+                    </dt>
+
+                    <dd>
+                        <label>@order.Total</label>
+                    </dd>
+
+
+                </dl>
+            </div>
+
+
+
+
+
+        }
+
+    }
+}
+
+
+
+<h3> Total Income : @total</h3>
